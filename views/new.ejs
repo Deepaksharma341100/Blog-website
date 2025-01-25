@@ -1,0 +1,29 @@
+<%= layout("./boilerplate.ejs") %>
+<div class="navbar">
+  <a href="/home">Home</a>
+  <a href="/new">Create Blog</a>
+</div>
+
+<div class="my">
+  <form action="/new" method="POST" class="blog-form">
+    <h2>Create a New Blog</h2>
+    <div class="form-group">
+      <label for="bloggername" class="newlabel">Blogger Name</label>
+      <input type="text" name="bloggername" id="bloggername" required />
+    </div>
+    <div class="form-group">
+      <label for="blogname" class="newlabel">Blog Name</label>
+      <input type="text" name="blogname" id="blogname" required />
+    </div>
+    <div class="form-group">
+      <label for="description" class="newlabel">Description</label>
+      <textarea
+        rows="5"
+        name="description"
+        id="description"
+        required
+      ></textarea>
+    </div>
+    <button type="submit" class="submit-btn">Submit</button>
+  </form>
+</div>

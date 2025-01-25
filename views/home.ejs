@@ -1,0 +1,29 @@
+<%= layout("./boilerplate.ejs") , {title:"Home" , page:"Home"}%>
+<div class="navbar">
+  <a href="/home">Home</a>
+  <a href="/new">Create Blog</a>
+  <a href="/profile">Profile</a>
+  <a href="/logout">Logout</a>
+</div>
+
+<div class="container">
+  <% for(let blog of blogs) { %>
+  <div class="container">
+    <div class="card">
+      <h1><%= blog.bloggername %></h1>
+
+      <h1 class="card-title">
+        <a href="/show/<%= blog._id %>"><%= blog.blogname %></a>
+      </h1>
+      <b
+        ><p class="card-description">
+          <%= blog.description.substring(0,100)%>...<a
+            href="/show/<%= blog._id %>"
+            >Read more</a
+          >
+        </p></b
+      >
+    </div>
+  </div>
+  <% } %>
+</div>

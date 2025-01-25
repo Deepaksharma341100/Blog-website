@@ -1,0 +1,47 @@
+<%= layout("./boilerplate.ejs") %>
+<div class="my">
+  <form
+    action="/edit/<%= editblog._id %>?_method=PUT"
+    method="post"
+    class="container"
+  >
+    <center><h2 class="text-primary mt-3 mb-3">Edit your Blog</h2></center>
+    <div class="form-group">
+      <label for="bloggername" class="newlabel">Blogger Name</label>
+      <input
+        type="text"
+        name="bloggername"
+        id="bloggername"
+        value="<%=editblog.bloggername%>"
+        class="form-control"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="blogname" class="newlabel">Blog Name</label>
+      <input
+        type="text"
+        name="blogname"
+        id="blogname"
+        value="<%=
+        editblog.blogname%>"
+        class="form-control"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="description" class="newlabel">Description</label>
+      <textarea
+        rows="5"
+        name="description"
+        id="description"
+        value="<%=
+        editblog.description%>"
+        class="form-control"
+        required
+      >
+      </textarea>
+    </div>
+    <button type="submit" class="submit-btn">Submit</button>
+  </form>
+</div>
