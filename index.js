@@ -16,6 +16,7 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 
 const db_url = process.env.DB_URL;
+const port = process.env.PORT || 3000;
 
 main().catch((err) => console.log(err));
 async function main() {
@@ -70,6 +71,6 @@ app.use((err, req, res, next) => {
   if (!err.message) err.message = "something went wrong";
   res.status(err.statusCode).render("err.ejs", { err });
 });
-app.listen(3000, () => {
+app.listen(port, () => {
   console.log("ok done");
 });
