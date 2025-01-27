@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: blog-website
+    runtime: static
+    repo:https://github.com/Deepaksharma341100/Blog-website
+    branch: main
+    buildCommand: npm install && node index.js
+    autoDeploy: false
+version: "1"
