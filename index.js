@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
+const MongoStore = require("connect-mongo");
 const path = require("path");
 const Blogger = require("./modals/data.js");
 const ExpressError = require("./ExpressError.js");
@@ -15,11 +16,6 @@ const cookieParser = require("cookie-parser");
 const db_url = process.env.DB_URL;
 const port = process.env.PORT || 3000;
 
-main().catch((err) => console.log(err));
-async function main() {
-  await mongoose.connect(db_url);
-  console.log("done");
-}
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
@@ -28,14 +24,29 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use("/", routeropen);
 app.use(cookieParser());
+
+mongoose
+  .connect(db_url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("MongoDB Connected"))
+  .catch((err) => console.error("MongoDB Connection Error:", err));
+
 app.use(
   session({
-    secret: "secret", // Change this to a secure secret
+    secret: process.env.SESSION_SECRET || "mysecret",
     resave: false,
     saveUninitialized: true,
+    store: MongoStore.create({
+      mongoUrl: process.env.DB_URL, // Your MongoDB connection string
+      collectionName: "sessions",
+    }),
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
+    },
   })
 );
-app.use(express.static(path.join(__dirname, "public")));
 
 app.post("/show/:id/reviews", async (req, res, next) => {
   try {
