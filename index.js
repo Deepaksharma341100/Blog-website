@@ -27,8 +27,7 @@ app.use(cookieParser());
 
 mongoose
   .connect(db_url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 10000,
   })
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.error("MongoDB Connection Error:", err));
