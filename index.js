@@ -12,10 +12,6 @@ const Review = require("./modals/review.js");
 const routeropen = require("./router.js");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
-
-const db_url = process.env.DB_URL;
-const port = process.env.PORT || 3000;
-
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
@@ -25,12 +21,15 @@ app.engine("ejs", ejsMate);
 app.use("/", routeropen);
 app.use(cookieParser());
 
-mongoose
-  .connect(db_url, {
-    serverSelectionTimeoutMS: 10000,
-  })
-  .then(() => console.log("MongoDB Connected"))
-  .catch((err) => console.error("MongoDB Connection Error:", err));
+const db_url = process.env.DB_URL;
+const port = process.env.PORT || 3000;
+
+main().catch((err) => console.log(err));
+
+async function main() {
+  await mongoose.connect(db_url);
+  console.log("done");
+}
 
 app.use(
   session({
