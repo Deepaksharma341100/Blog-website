@@ -7,6 +7,7 @@ const path = require("path");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
+const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const passport = require("passport");
 const Blogger = require("./modals/data.js");
@@ -18,14 +19,23 @@ const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const multer = require("multer");
 router.use(express.static(path.join(__dirname, "public"))); //because static files were not include in router
 router.use(cookieParser());
-router.use(
+
+const db_url = process.env.DB_URL;
+
+app.use(
   session({
-    secret: "my secret",
+    secret: process.env.SESSION_SECRET || "mysecret",
     resave: false,
     saveUninitialized: true,
+    store: MongoStore.create({
+      mongoUrl: db_url, // Your MongoDB connection string
+      collectionName: "sessions",
+    }),
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
+    },
   })
 );
-
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next(); // User is authenticated, proceed to the next middleware/route handler
