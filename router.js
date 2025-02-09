@@ -22,7 +22,7 @@ router.use(cookieParser());
 
 const db_url = process.env.DB_URL;
 
-app.use(
+router.use(
   session({
     secret: process.env.SESSION_SECRET || "mysecret",
     resave: false,
