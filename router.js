@@ -29,10 +29,13 @@ router.use(
     saveUninitialized: true,
     proxy: true,
     store: MongoStore.create({
-      mongoUrl: db_url, // Your MongoDB connection string
+      mongoUrl: db_url,
       collectionName: "sessions",
     }),
     cookie: {
+      secure: true,
+      httpOnly: true,
+      sameSite: "None",
       maxAge: 1000 * 60 * 60 * 24, // 1 day
     },
   })
