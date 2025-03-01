@@ -27,6 +27,7 @@ router.use(
     secret: process.env.SESSION_SECRET || "mysecret",
     resave: false,
     saveUninitialized: true,
+    proxy: true,
     store: MongoStore.create({
       mongoUrl: db_url, // Your MongoDB connection string
       collectionName: "sessions",
