@@ -108,6 +108,11 @@ const upload = multer({ storage });
 router.get("/register", async (req, res) => {
   res.render("register.ejs", { title: "registration", page: "Registration" });
 });
+
+router.get("/login", async (req, res) => {
+  res.render("login.ejs", { title: "Login", page: "Login" });
+});
+
 router.post("/register", upload.single("image"), async (req, res) => {
   const { username, password, email, bio, address } = req.body;
   try {
@@ -131,10 +136,6 @@ router.post("/register", upload.single("image"), async (req, res) => {
 
     res.status(500).send("Server error");
   }
-});
-
-router.get("/login", async (req, res) => {
-  res.render("login.ejs", { title: "Login", page: "Login" });
 });
 
 router.post(
